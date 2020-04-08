@@ -1,0 +1,248 @@
+{
+	"id": "060170ed-2410-44bf-8a81-6e1a9ff702d5",
+	"name": "快车",
+	"description": "",
+	"auth": null,
+	"events": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2f411627-8f6e-4d51-99a3-93ff9932eb5c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d1453e08-033b-4d87-b1e6-fba9101d406c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variables": [],
+	"order": [
+		"6826c14e-05b0-4d92-bb97-478e5df4eefa",
+		"dced4f0d-eb31-4a95-b556-565832bee53c",
+		"8331bfe9-be70-42b5-b3c4-2a9129501cb2",
+		"63d65ea9-7495-4bb1-ac81-a6c0e69d5391"
+	],
+	"folders_order": [],
+	"protocolProfileBehavior": {},
+	"folders": [],
+	"requests": [
+		{
+			"id": "63d65ea9-7495-4bb1-ac81-a6c0e69d5391",
+			"name": "订单校验",
+			"url": "{{url}}/carOrder/passenger/runningOrderHint",
+			"description": "",
+			"data": [],
+			"dataOptions": {
+				"raw": {
+					"language": "json"
+				}
+			},
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1ce9cc19-4564-49e1-9f90-a84864620f4a",
+						"exec": [
+							"//pm.environment.unset(\"orderId\");",
+							"",
+							"pm.test(\"msg\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.msg).to.eql(\"没有进行中的订单\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\r\n\t\"deviceId\": \"661152F1-9E35-494E-87C7-25E7C26F9A9A\",\r\n\t\"channel\": \"1020000000\",\r\n\t\"appChannel\": \"AppStore\",\r\n\t\"platform\": \"2\",\r\n\t\"data\": \"{}\",\r\n\t\"idfv\": \"7D4FDF46-7554-4B4C-9D55-178567A783D9\",\r\n\t\"softVersion\": \"4.7.0\",\r\n\t\"imei\": \"5F1B9F11-2CA9-40A6-9351-03D2638B5886\",\r\n\t\"sysVersion\": \"13.3\",\r\n\t\"token\": \"MTAxMTAwOTMxMzkzNToxMDA6MjAyMDA0MDYwOTQ5MDUzMTE=\"\r\n}",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "6826c14e-05b0-4d92-bb97-478e5df4eefa",
+			"name": "预估价",
+			"url": "{{url}}/carOrder/passenger/estimatePrice",
+			"description": "",
+			"data": [],
+			"dataOptions": {
+				"raw": {
+					"language": "json"
+				}
+			},
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9938b6c0-9af4-46a5-b7af-7266bd8a693f",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "765e02af-2535-4865-b408-552a9d4673f3",
+						"exec": [
+							"pm.test(\"code\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.code).to.eql(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\r\n\t\"deviceId\": \"{{deviceId}}\",\r\n\t\"channel\": \"{{channel}}\",\r\n\t\"appChannel\": \"{{appChannel}}\",\r\n\t\"platform\": \"{{platform}}\",\r\n\t\"data\": \"{\\\"distance\\\":424,\\\"endPoint\\\":{\\\"speed\\\":0,\\\"areaCode\\\":\\\"440306\\\",\\\"lon\\\":113.86167907714844,\\\"address\\\":\\\"西乡汽车客运站\\\",\\\"lat\\\":22.583137512207031},\\\"startPoint\\\":{\\\"lon\\\":113.86328125,\\\"areaCode\\\":\\\"440306\\\",\\\"address\\\":\\\"中天美景大酒店\\\",\\\"speed\\\":0,\\\"lat\\\":22.583721160888672},\\\"deviceId\\\":\\\"661152F1-9E35-494E-87C7-25E7C26F9A9A\\\",\\\"costTime\\\":156,\\\"startID\\\":\\\"\\\",\\\"endID\\\":\\\"\\\",\\\"carShare\\\":0,\\\"orderType\\\":20}\",\r\n\t\"idfv\": \"{{idfv}}\",\r\n\t\"softVersion\": \"{{softVersion}}\",\r\n\t\"imei\": \"{{imei}}\",\r\n\t\"sysVersion\": \"{{sysVersion}}\",\r\n\t\"token\": \"{{token}}\"\r\n}",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "8331bfe9-be70-42b5-b3c4-2a9129501cb2",
+			"name": "快车取消订单",
+			"url": "{{url}}/carOrder/exp/userCancel",
+			"description": "",
+			"data": [],
+			"dataOptions": {
+				"raw": {
+					"language": "json"
+				}
+			},
+			"dataMode": "raw",
+			"headerData": [],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8214096c-dd27-40a4-8bc0-952b190f5167",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b811b180-e8d4-4907-a89f-c1256e1dfe48",
+						"exec": [
+							"//清楚环境变量",
+							"pm.environment.unset(\"orderId\");",
+							"",
+							"pm.test(\"msg\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.msg).to.eql(\"响应成功\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\r\n\t\"deviceId\": \"{{deviceId}}\",\r\n\t\"channel\": \"{{channel}}\",\r\n\t\"appChannel\": \"{{appChannel}}\",\r\n\t\"platform\": \"{{platform}}\",\r\n\t\"data\": \"{\\\"orderId\\\":\\\"{{orderId}}\\\",\\\"cancelReason\\\":0,\\\"cancelReasonMark\\\":\\\"\\\",\\\"point\\\":{\\\"lat\\\":22.583738606770833,\\\"address\\\":\\\"广东省深圳市宝安区宝安大道靠近旭生大厦\\\",\\\"lon\\\":113.86326388888889}}\",\r\n\t\"idfv\": \"{{idfv}}\",\r\n\t\"softVersion\": \"{{softVersion}}\",\r\n\t\"imei\": \"{{imei}}\",\r\n\t\"sysVersion\": \"{{sysVersion}}\",\r\n\t\"token\": \"{{token}}\"\r\n}",
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "dced4f0d-eb31-4a95-b556-565832bee53c",
+			"name": "快车实时单",
+			"url": "{{url}}/carOrder/exp/dispatch/instantOrder",
+			"description": "",
+			"data": [],
+			"dataOptions": {
+				"raw": {
+					"language": "json"
+				}
+			},
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"name": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"type": "text"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8f375943-096f-4140-8939-6a3a7bbfa438",
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"orderType\", function () {\r",
+							"    var data=JSON.parse(responseBody);\r",
+							"     var data1=JSON.parse(data.data)\r",
+							"     \r",
+							"    pm.expect(data1.orderType).to.eql(20);\r",
+							"});\r",
+							"\r",
+							"//定位data数据\r",
+							"var data=JSON.parse(responseBody); \r",
+							"var data1 =JSON.parse(data.data); \r",
+							"//创建环境变量\r",
+							"pm.environment.set(\"orderId\",data1.orderId);\r",
+							"      \r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7c696f9e-7e8d-459d-a617-1a0f1b18a015",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"rawModeData": "{\r\n\t\"deviceId\": \"{{deviceId}}\",\r\n\t\"channel\": \"{{channel}}\",\r\n\t\"appChannel\": \"{{appChannel}}\",\r\n\t\"platform\": \"{{platform}}\",\r\n\t\"data\": \"{\\\"passengerPhone\\\":\\\"\\\",\\\"startPoint\\\":{\\\"areaCode\\\":\\\"440306\\\",\\\"lat\\\":22.583801540798611,\\\"lon\\\":113.86321072048611,\\\"address\\\":\\\"\\\"},\\\"startAddress\\\":\\\"中天美景大酒店\\\",\\\"estimateDistance\\\":1710,\\\"carShare\\\":1,\\\"discountMoney\\\":\\\"108\\\",\\\"passengerNum\\\":0,\\\"isPrePay\\\":false,\\\"estimateTime\\\":290,\\\"prePayPrice\\\":1080,\\\"category\\\":\\\"\\\",\\\"estimateDetail\\\":\\\"{\\\\\\\"timeFeePackage\\\\\\\":{\\\\\\\"totalFee\\\\\\\":1500,\\\\\\\"totalCount\\\\\\\":300,\\\\\\\"detailPacket\\\\\\\":[{\\\\\\\"name\\\\\\\":\\\\\\\"00:00-23:59\\\\\\\",\\\\\\\"fee\\\\\\\":1500,\\\\\\\"counter\\\\\\\":300,\\\\\\\"type\\\\\\\":null}]},\\\\\\\"mileFeePackage\\\\\\\":{\\\\\\\"totalFee\\\\\\\":570,\\\\\\\"totalCount\\\\\\\":1900,\\\\\\\"detailPacket\\\\\\\":[{\\\\\\\"name\\\\\\\":\\\\\\\"00:00-23:59\\\\\\\",\\\\\\\"fee\\\\\\\":570,\\\\\\\"counter\\\\\\\":1900,\\\\\\\"type\\\\\\\":null}]},\\\\\\\"farReturnMileage\\\\\\\":1800,\\\\\\\"farReturnFee\\\\\\\":90,\\\\\\\"totalPrice\\\\\\\":2160,\\\\\\\"discountMoney\\\\\\\":null,\\\\\\\"concessionarAmount\\\\\\\":null,\\\\\\\"chargingType\\\\\\\":20,\\\\\\\"lowestconsumeFee\\\\\\\":100,\\\\\\\"initalFee\\\\\\\":{\\\\\\\"startTime\\\\\\\":null,\\\\\\\"endTime\\\\\\\":null,\\\\\\\"startFee\\\\\\\":null,\\\\\\\"perKmFee\\\\\\\":null,\\\\\\\"perMinFee\\\\\\\":null,\\\\\\\"timeType\\\\\\\":null},\\\\\\\"insuranceFee\\\\\\\":0,\\\\\\\"chargingRuleId\\\\\\\":2619,\\\\\\\"waitingFeePackage\\\\\\\":{\\\\\\\"totalFee\\\\\\\":400,\\\\\\\"totalCount\\\\\\\":230,\\\\\\\"detailPacket\\\\\\\":[{\\\\\\\"name\\\\\\\":\\\\\\\"00:00-23:59\\\\\\\",\\\\\\\"fee\\\\\\\":400,\\\\\\\"counter\\\\\\\":230,\\\\\\\"type\\\\\\\":0}]},\\\\\\\"farReturnFeePackage\\\\\\\":{\\\\\\\"totalFee\\\\\\\":90,\\\\\\\"totalCount\\\\\\\":1800,\\\\\\\"detailPacket\\\\\\\":[{\\\\\\\"name\\\\\\\":\\\\\\\"第1梯度\\\\\\\",\\\\\\\"fee\\\\\\\":90,\\\\\\\"counter\\\\\\\":1800,\\\\\\\"type\\\\\\\":null}]},\\\\\\\"lowestCostVo\\\\\\\":{\\\\\\\"startTime\\\\\\\":\\\\\\\"00:00\\\\\\\",\\\\\\\"endTime\\\\\\\":\\\\\\\"23:59\\\\\\\",\\\\\\\"lowestFee\\\\\\\":100,\\\\\\\"timeType\\\\\\\":0},\\\\\\\"anwserCode\\\\\\\":{\\\\\\\"code\\\\\\\":1,\\\\\\\"message\\\\\\\":\\\\\\\"响应成功\\\\\\\"}}\\\",\\\"passengerPoint\\\":{\\\"address\\\":\\\"广东省深圳市宝安区宝安大道靠近旭生大厦\\\",\\\"lat\\\":22.583778754340276,\\\"lon\\\":113.86320990668403,\\\"areaCode\\\":\\\"440306\\\",\\\"locTime\\\":\\\"1582859575673\\\"},\\\"estimatePrice\\\":\\\"2160\\\",\\\"endPoint\\\":{\\\"lat\\\":22.575149,\\\"address\\\":\\\"1号线\\\\\\/罗宝线\\\",\\\"areaCode\\\":\\\"440306\\\",\\\"lon\\\":113.86304800000001},\\\"endAddress\\\":\\\"西乡(地铁站)\\\"}\",\r\n\t\"idfv\": \"{{idfv}}\",\r\n\t\"softVersion\": \"{{softVersion}}\",\r\n\t\"imei\": \"{{imei}}\",\r\n\t\"sysVersion\": \"{{sysVersion}}\",\r\n\t\"token\": \"{{token}}\"\r\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		}
+	]
+}
